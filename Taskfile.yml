@@ -1,0 +1,62 @@
+# https://taskfile.dev
+# 使い方: `task up` で リバースプロキシ(nginx) + Vite 開発サーバーが起動します
+version: '3'
+
+tasks:
+  default:
+    desc: タスク一覧を表示
+    cmds:
+      - task --list
+
+  up:
+    desc: 開発環境を起動 (https://localhost:5173)
+    cmds:
+      # --build            : Dockerfile / package.json の変更を反映
+      # --renew-anon-volumes: node_modules を最新のイメージ内容で作り直す
+      - docker compose up --build --renew-anon-volumes -d
+      - echo "起動しました → https://localhost:5173"
+
+  down:
+    desc: 開発環境を停止
+    cmds:
+      - docker compose down
+
+  logs:
+    desc: ログを表示 (Ctrl+C で終了)
+    cmds:
+      - docker compose logs -f
+
+  restart:
+    desc: 再起動
+    cmds:
+      - task: down
+      - task: up
+
+  # ---- Node.js 関連 (ホストに Node.js が無くても、全て Docker 内で実行) ----
+  # ※ npm / sh は起動中の app コンテナで実行するため、先に `task up` が必要です
+
+  npm:
+    desc: "コンテナ内で npm を実行 (例: task npm -- install axios)"
+    cmds:
+      # package.json / package-lock.json はホストに反映され、node_modules はコンテナ側に入る
+      - docker compose exec app npm {{.CLI_ARGS}}
+
+  sh:
+    desc: app コンテナ内のシェルに入る
+    cmds:
+      - docker compose exec app bash
+
+  typecheck:
+    desc: TypeScript の型チェック
+    cmds:
+      - docker compose exec app npx tsc --noEmit
+
+  build:
+    desc: 本番ビルド (成果物は ./dist)
+    cmds:
+      - docker compose run --rm --no-deps app npm run build
+
+  clean:
+    desc: コンテナ・ボリューム(証明書含む)を全て削除
+    cmds:
+      - docker compose down -v

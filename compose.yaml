@@ -1,0 +1,32 @@
+services:
+  # ---- リバースプロキシ (nginx で HTTPS 終端) ----
+  proxy:
+    build: ./proxy
+    ports:
+      # ホスト 5173 番で HTTPS を待ち受ける (コンテナ内の 443 へ転送)
+      - "5173:443"
+    volumes:
+      # 自動生成した自己証明書を永続化。再起動しても同じ証明書を使えます
+      - certs:/etc/nginx/certs
+    depends_on:
+      - app
+
+  # ---- React + TypeScript (Vite 開発サーバー) ----
+  app:
+    build: .
+    # ポートはホストに公開しない。proxy 経由でのみアクセス可能
+    expose:
+      - "5173"
+    volumes:
+      # ソースをマウントしてホットリロードを有効化
+      - ./src:/app
+      # コンテナ内の node_modules をホスト側で上書きしない
+      - /app/node_modules
+    environment:
+      # Docker for Mac のファイル変更検知を確実にする
+      - CHOKIDAR_USEPOLLING=true
+    env_file:
+      - ./config/sample.env
+
+volumes:
+  certs:
