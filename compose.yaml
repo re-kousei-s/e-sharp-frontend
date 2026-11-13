@@ -6,6 +6,8 @@ services:
       # ホスト 5173 番で HTTPS を待ち受ける (コンテナ内の 443 へ転送)
       - "5173:443"
     volumes:
+      # 開発用の nginx 設定
+      - ./proxy/nginx.dev.conf:/etc/nginx/conf.d/default.conf:ro
       # 自動生成した自己証明書を永続化。再起動しても同じ証明書を使えます
       - certs:/etc/nginx/certs
     depends_on:
@@ -13,7 +15,10 @@ services:
 
   # ---- React + TypeScript (Vite 開発サーバー) ----
   app:
-    build: .
+    build:
+      context: .
+      # Dockerfile の dev ステージ (開発用) を使う
+      target: dev
     # ポートはホストに公開しない。proxy 経由でのみアクセス可能
     expose:
       - "5173"

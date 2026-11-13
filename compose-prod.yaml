@@ -1,0 +1,55 @@
+# 本番(リリース)用。リバースプロキシ(nginx) の配下で static-web-server を動かす
+#
+#   起動: task prod:up   (docker compose -f compose-prod.yaml up -d)
+#   → https://localhost:5174
+#
+# イメージは GitHub Actions が main マージ時に ghcr へ push したものを使います。
+# ローカルでビルドして試す場合は `task prod:build` を先に実行してください。
+# 開発(compose.yaml)とコンテナ・ボリュームがぶつからないようプロジェクト名を分ける
+name: e-sharp-frontend-prod
+
+services:
+  # ---- リバースプロキシ (nginx で HTTPS 終端) ----
+  proxy:
+    build: ./proxy
+    restart: unless-stopped
+    ports:
+      - "5174:443"  # ホスト 5174 番で HTTPS を待ち受ける (コンテナ内の 443 へ転送)
+    volumes:
+      # 本番用の nginx 設定
+      - ./proxy/nginx.prod.conf:/etc/nginx/conf.d/default.conf:ro
+      # 自動生成した自己証明書を永続化
+      - certs:/etc/nginx/certs
+    depends_on:
+      app:
+        condition: service_healthy
+
+  # ---- React アプリ (static-web-server で静的配信) ----
+  app:
+    # ghcr のイメージ。IMAGE_TAG で版を切り替えられる (例: IMAGE_TAG=sha-abc1234)
+    image: ghcr.io/re-kousei-s/e-sharp-frontend:${IMAGE_TAG:-latest}
+    # task prod:build で Dockerfile の prod ステージをローカルビルドする場合に使用
+    build:
+      context: .
+      target: prod
+    restart: unless-stopped
+    # ポートはホストに公開しない。proxy 経由でのみアクセス可能
+    expose:
+      - "80"
+    # config/ の環境変数を渡す場合は有効にする
+    # env_file:
+    #   - ./config/sample.env
+    healthcheck:
+      # static-web-server の /health で死活確認
+      # (イメージに curl / wget が無いため、bash の /dev/tcp で HTTP リクエストを送る)
+      test:
+        - CMD
+        - bash
+        - -c
+        - 'exec 3<>/dev/tcp/127.0.0.1/80 && printf "GET /health HTTP/1.0\r\n\r\n" >&3 && head -n1 <&3 | grep -q " 200 "'
+      interval: 10s
+      timeout: 3s
+      retries: 5
+
+volumes:
+  certs:

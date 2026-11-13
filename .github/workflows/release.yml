@@ -1,0 +1,51 @@
+# リリース: main ブランチにマージ(push)されたら、本番イメージをビルドして ghcr に push する
+name: Release
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+  packages: write  # ghcr.io へ push するために必要
+
+jobs:
+  image:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # マルチアーキテクチャ (amd64 / arm64) のイメージを作るために必要
+      - uses: docker/setup-qemu-action@v3
+      - uses: docker/setup-buildx-action@v3
+
+      # ghcr.io へログイン (GitHub 標準の GITHUB_TOKEN で OK)
+      - uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      # タグとラベルを自動で決める
+      #   latest     : 常に最新の main
+      #   sha-xxxxxx : コミットごとの固定タグ (ロールバック用)
+      - id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ghcr.io/${{ github.repository }}
+          tags: |
+            type=raw,value=latest
+            type=sha
+
+      - uses: docker/build-push-action@v6
+        with:
+          context: .
+          # Dockerfile の prod ステージ (static-web-server) をビルド
+          target: prod
+          platforms: linux/amd64,linux/arm64
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          # ビルドキャッシュを GitHub Actions に保存して高速化
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
