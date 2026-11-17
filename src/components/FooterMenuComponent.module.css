@@ -1,0 +1,13 @@
+.footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  box-sizing: border-box;
+  width: 100%;
+  height: 77px;
+  display: flex;
+  /* 項目を左右均等に配置 */
+  justify-content: space-around;
+  /* 上下中央揃え */
+  align-items: center;
+}
