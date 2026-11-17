@@ -51,8 +51,36 @@ tasks:
     cmds:
       - docker compose exec app npx tsc --noEmit
 
+  lint:
+    desc: ESLint でコードをチェック (CI と同じ内容)
+    cmds:
+      - docker compose exec app npm run lint
+
+  # ---- 本番(リリース)用: compose-prod.yaml ----
+
+  prod:build:
+    desc: 本番イメージをローカルでビルド (Dockerfile の prod ステージ)
+    cmds:
+      - docker compose -f compose-prod.yaml build app
+
+  prod:up:
+    desc: 本番構成を起動 (https://localhost:5174)
+    cmds:
+      - docker compose -f compose-prod.yaml up --build -d
+      - echo "起動しました → https://localhost:5174"
+
+  prod:down:
+    desc: 本番構成を停止
+    cmds:
+      - docker compose -f compose-prod.yaml down
+
+  prod:logs:
+    desc: 本番構成のログを表示 (Ctrl+C で終了)
+    cmds:
+      - docker compose -f compose-prod.yaml logs -f
+
   build:
-    desc: 本番ビルド (成果物は ./dist)
+    desc: 静的ファイルのビルドのみ (成果物は ./src/dist)
     cmds:
       - docker compose run --rm --no-deps app npm run build
 
