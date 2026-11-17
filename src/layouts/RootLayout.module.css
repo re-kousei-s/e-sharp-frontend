@@ -1,0 +1,21 @@
+/*
+ * モバイルファースト
+ * - ここに書くスタイルがスマホ版 (基準)
+ * - PC 版は下の @media (min-width: 768px) で上書きする
+ */
+
+/* ---- スマホ版 ---- */
+.root {
+  font-family: sans-serif;
+  padding-top: 18px;
+  /* padding-right: 18px;
+  padding-bottom: 18px;
+  padding-left: 18px; */
+}
+
+/* ---- PC 版 (768px 以上) ---- */
+@media (min-width: 768px) {
+  .root {
+    /* PC 版の余白はここに追加する */
+  }
+}
