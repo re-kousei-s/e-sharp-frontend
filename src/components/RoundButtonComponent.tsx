@@ -2,13 +2,33 @@ import type { ButtonHTMLAttributes, ReactNode } from 'react'
 import styles from './RoundButtonComponent.module.css'
 
 type Props = Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'children'> & {
-  // 中央に表示するアイコン (svg 要素など)
+  /** 中央に表示するアイコン (IconComponent や svg 要素など) */
   icon: ReactNode
-  // アイコンのみで文字がないため、スクリーンリーダー向けのラベルを必須にする
+  /** スクリーンリーダー向けのラベル (アイコンのみで文字がないため必須) */
   'aria-label': string
 }
 
-// 丸ボタン (38px × 38px / 中央にアイコン)
+/**
+ * 丸ボタン (縦横 38px)。
+ *
+ * 中央に `icon` で渡したアイコンを配置する。
+ *
+ * `onClick` など通常の button 属性もそのまま指定できる。
+ *
+ * `type` の既定値は `button`。
+ *
+ * 引数:
+ * - icon: ReactNode
+ * - aria-label: string
+ * - その他の button 属性: ButtonHTMLAttributes<HTMLButtonElement> (children を除く)
+ *
+ * @example
+ * <RoundButtonComponent
+ *   aria-label="追加"
+ *   onClick={handleAdd}
+ *   icon={<IconComponent src={plusIcon} color="#fff" />}
+ * />
+ */
 export default function RoundButtonComponent({ icon, className, ...rest }: Props) {
   return (
     <button
