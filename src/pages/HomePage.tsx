@@ -1,5 +1,7 @@
+import TitleComponent from '../components/TitleComponent'
+
 export default function HomePage() {
   return <>
-    <h1>Home</h1>
+    <TitleComponent title="Home" />
   </>
 }

@@ -1,9 +1,8 @@
-import type { ReactNode } from 'react'
 import styles from './TitleComponent.module.css'
 
 type Props = {
   /** 見出しとして表示するテキスト */
-  children: ReactNode
+  title: string
 }
 
 /**
@@ -12,11 +11,11 @@ type Props = {
  * `<h1>` として描画する。
  *
  * 引数:
- * - children: ReactNode
+ * - title: string
  *
  * @example
- * <TitleComponent>ホーム</TitleComponent>
+ * <TitleComponent title="ホーム" />
  */
-export default function TitleComponent({ children }: Props) {
-  return <h1 className={styles.heading}>{children}</h1>
+export default function TitleComponent({ title }: Props) {
+  return <h1 className={styles.heading}>{title}</h1>
 }
