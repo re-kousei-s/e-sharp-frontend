@@ -1,0 +1,18 @@
+/*
+ * 共通色 (テーマカラー) の定義元。
+ * 色を変更するときはこのファイルだけを編集する。
+ * - CSS: color: var(--color-main);
+ * - TS : colors.main (styles/colors.ts)
+ */
+:root {
+  /* メインカラー */
+  --color-main: #48688A;
+  /* サブカラー */
+  --color-sub: #648DB3;
+  /* 文字色 */
+  --color-text: #EFEEEB;
+  /* 背景色 */
+  --color-background: #FEFEFB;
+  /* タイトル色 */
+  --color-title: #0B0F14;
+}
