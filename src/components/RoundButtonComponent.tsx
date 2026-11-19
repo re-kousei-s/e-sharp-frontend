@@ -6,18 +6,20 @@ import styles from './RoundButtonComponent.module.css'
 type Props = Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'children'> & {
   /** 中央に表示するアイコンの svg (例: `image.add`) */
   src: string
-  /** アイコンの縦横サイズ (px)。省略時は IconComponent の既定値 */
+  /** アイコンの縦横サイズ (px)。省略時は 24 */
   iconSize?: number
   /** スクリーンリーダー向けのラベル (アイコンのみで文字がないため必須) */
   'aria-label': string
 }
+
+const DEFAULT_ICON_SIZE = 24
 
 /**
  * 丸ボタン (縦横 38px / 背景色はサブカラー)。
  *
  * 中央に `src` で指定したアイコンを配置する (内部で IconComponent を使用)。
  *
- * アイコンの色は文字色 (colors.text) で固定。
+ * アイコンの色は文字色 (colors.text) / 既定サイズは 24px (`iconSize` で変更可能)。
  *
  * `onClick` など通常の button 属性もそのまま指定できる。
  *
@@ -26,19 +28,19 @@ type Props = Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'children'> & {
  * 引数:
  * - src: string
  * - iconSize?: number
- * - aria-label: string
+ * - aria-label(概要): string
  * - その他の button 属性: ButtonHTMLAttributes<HTMLButtonElement> (children を除く)
  *
  * @example
  * <RoundButtonComponent
- *   src={image.add}
+ *   src={image.アイコン名}
  *   aria-label="追加"
- *   onClick={handleAdd}
+ *   onClick={クリックイベント}
  * />
  */
 export default function RoundButtonComponent({
   src,
-  iconSize,
+  iconSize = DEFAULT_ICON_SIZE,
   className,
   ...rest
 }: Props) {
