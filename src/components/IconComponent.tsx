@@ -6,11 +6,11 @@ type Props = {
   src: string
   /** アイコンの色 (CSS の色指定: `'#fff'`, `'red'`, `'currentColor'` など) */
   color: string
-  /** 縦横サイズ (px)。省略時は 24 */
+  /** 縦横サイズ (px)。省略時は 39 */
   size?: number
 }
 
-const DEFAULT_SIZE = 24
+const DEFAULT_SIZE = 39
 
 /**
  * svg アイコン。
