@@ -2,8 +2,8 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  /* アイコンとテキストの間隔は空けない */
-  gap: 0;
+  /* アイコンとテキストの間隔 */
+  gap: 3px;
   text-align: center;
 }
 

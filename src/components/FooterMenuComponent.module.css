@@ -5,9 +5,21 @@
   box-sizing: border-box;
   width: 100%;
   height: 77px;
+  background-color: var(--color-background);
   display: flex;
   /* 項目を左右均等に配置 */
   justify-content: space-around;
-  /* 上下中央揃え */
-  align-items: center;
+  /* 項目をフッター下端に揃え、下端から 6px 空ける */
+  align-items: flex-end;
+  padding-bottom: 6px;
+  /* 上側への影 (x 0 / y -4 / ぼかし 4 / 広がり 0 / #6C6C6C 透明度 10%) */
+  box-shadow: 0 -4px 4px 0 rgba(108, 108, 108, 0.1);
+}
+
+/* 最上部中央のタブ画像 (フッター内の上端・左右中央) */
+.tab {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
 }
