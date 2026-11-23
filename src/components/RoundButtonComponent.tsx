@@ -1,25 +1,23 @@
 import type { ButtonHTMLAttributes } from 'react'
-import IconComponent from './IconComponent'
+import IconComponent, { type IconSize } from './IconComponent'
 import { colors } from '../styles/colors'
 import styles from './RoundButtonComponent.module.css'
 
 type Props = Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'children'> & {
   /** 中央に表示するアイコンの svg (例: `image.add`) */
   src: string
-  /** アイコンの縦横サイズ (px)。省略時は 24 */
-  iconSize?: number
+  /** アイコンのサイズ。`'small'` (24px) / `'large'` (39px)。省略時は `'small'` */
+  iconSize?: IconSize
   /** スクリーンリーダー向けのラベル (アイコンのみで文字がないため必須) */
   'aria-label': string
 }
-
-const DEFAULT_ICON_SIZE = 24
 
 /**
  * 丸ボタン (縦横 38px / 背景色はサブカラー)。
  *
  * 中央に `src` で指定したアイコンを配置する (内部で IconComponent を使用)。
  *
- * アイコンの色は文字色 (colors.text) / 既定サイズは 24px (`iconSize` で変更可能)。
+ * アイコンの色は文字色 (colors.text) / 既定サイズは small (24px) (`iconSize` で変更可能)。
  *
  * `onClick` など通常の button 属性もそのまま指定できる。
  *
@@ -27,7 +25,7 @@ const DEFAULT_ICON_SIZE = 24
  *
  * 引数:
  * - src: string
- * - iconSize?: number
+ * - iconSize?: 'small' | 'large'
  * - aria-label(概要): string
  * - その他の button 属性: ButtonHTMLAttributes<HTMLButtonElement> (children を除く)
  *
@@ -40,7 +38,7 @@ const DEFAULT_ICON_SIZE = 24
  */
 export default function RoundButtonComponent({
   src,
-  iconSize = DEFAULT_ICON_SIZE,
+  iconSize = 'small',
   className,
   ...rest
 }: Props) {

@@ -1,5 +1,5 @@
 import { colors } from '../styles/colors'
-import IconComponent from './IconComponent'
+import IconComponent, { type IconSize } from './IconComponent'
 import styles from './FooterMenuItemComponent.module.css'
 
 type Props = {
@@ -9,8 +9,8 @@ type Props = {
   label: string
   /** 選択中かどうか。true: 選択中 (メインカラー) / false: 未選択 (グレー)。省略時は false */
   selected?: boolean
-  /** アイコンの縦横サイズ (px)。省略時は IconComponent の既定値 */
-  iconSize?: number
+  /** アイコンのサイズ。`'small'` (24px) / `'large'` (39px)。省略時は `'large'` */
+  iconSize?: IconSize
 }
 
 /** バリアントごとの色 (アイコンとテキスト共通) */
@@ -32,7 +32,7 @@ const VARIANT_COLORS = {
  * - src: string
  * - label: string
  * - selected?: boolean
- * - iconSize?: number
+ * - iconSize?: 'small' | 'large'
  *
  * @example
  * <FooterMenuItemComponent src={image.アイコン名} label="アイコン下テキスト" />
