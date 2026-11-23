@@ -17,6 +17,7 @@ import deleteIcon from './delete.svg'
 import draw from './draw.svg'
 import event from './event.svg'
 import expand from './expand.svg'
+import footerTab from './footer-tab.svg'
 import line from './line.svg'
 import mobile from './mobile.svg'
 import remove from './remove.svg'
@@ -41,6 +42,7 @@ export const image = {
   draw,
   event,
   expand,
+  footerTab,
   line,
   mobile,
   remove,

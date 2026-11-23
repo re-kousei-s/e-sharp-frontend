@@ -4,13 +4,18 @@
  * - PC 版は下の @media (min-width: 768px) で上書きする
  */
 
+/* 共通 */
+:global(body) {
+  margin: 0;
+  background-color: var(--color-background);
+}
+
 /* ---- スマホ版 ---- */
 .root {
   font-family: sans-serif;
   padding-top: 18px;
-  /* padding-right: 18px;
-  padding-bottom: 18px;
-  padding-left: 18px; */
+  padding-right: 22px;
+  padding-left: 22px;
 }
 
 /* ---- PC 版 (768px 以上) ---- */
