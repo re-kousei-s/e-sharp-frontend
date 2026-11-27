@@ -1,0 +1,35 @@
+.card {
+  /* ドロップシャドウ (#7986A9 不透明度 5%)。x / y / ぼかし の順 */
+  --card-shadow:
+    2px -4px 20px rgba(121, 134, 169, 0.05),
+    -2px 4px 20px rgba(121, 134, 169, 0.05);
+  box-sizing: border-box;
+  /* 中身を上下中央に配置 (複数の要素は縦に積む) */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 359px;
+  /* 内余白 (box-sizing: border-box なので幅・固定高さに含まれる) */
+  padding: 16px;
+  border-radius: 10px;
+  box-shadow: var(--card-shadow);
+}
+
+/* list 指定時: 高さを固定 */
+.list {
+  height: 84px;
+}
+
+/* 背景色: サブカラー */
+.sub {
+  background-color: var(--color-sub);
+}
+
+/* 背景色: 白 */
+.white {
+  background-color: #FFF;
+  /* 内側の枠線は inset の影で描く (カードの寸法や中身の位置に影響しない) */
+  box-shadow:
+    inset 0 0 0 0.5px #C4D4FF,
+    var(--card-shadow);
+}

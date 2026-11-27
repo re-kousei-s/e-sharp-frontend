@@ -1,5 +1,5 @@
-import { colors } from '../styles/colors'
 import IconComponent, { type IconSize } from './IconComponent'
+import { ICON_COLORS } from './iconColors'
 import styles from './FooterMenuItemComponent.module.css'
 
 type Props = {
@@ -15,8 +15,8 @@ type Props = {
 
 /** バリアントごとの色 (アイコンとテキスト共通) */
 const VARIANT_COLORS = {
-  unselected: '#A5A5A5',
-  selected: colors.main,
+  unselected: 'gray',
+  selected: 'main',
 } as const
 
 /**
@@ -47,7 +47,7 @@ export default function FooterMenuItemComponent({
   const color = VARIANT_COLORS[selected ? 'selected' : 'unselected']
 
   return (
-    <div className={styles.item} style={{ color }}>
+    <div className={styles.item} style={{ color: ICON_COLORS[color] }}>
       <IconComponent src={src} color={color} size={iconSize} />
       <span className={styles.label}>{label}</span>
     </div>

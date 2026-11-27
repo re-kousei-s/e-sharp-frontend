@@ -1,5 +1,5 @@
 import type { CSSProperties, MouseEventHandler } from 'react'
-import { colors } from '../styles/colors'
+import { ICON_COLORS, type IconColor } from './iconColors'
 import styles from './IconComponent.module.css'
 
 /** アイコンのサイズ (small: 24px / large: 39px) */
@@ -13,8 +13,8 @@ const ICON_SIZES: Record<IconSize, number> = {
 type Props = {
   /** svg ファイルの URL (例: `import plusIcon from '../assets/plus.svg'`) */
   src: string
-  /** アイコンの色 (CSS の色指定: `'#fff'`, `'red'`, `'currentColor'` など)。省略時はサブカラー (colors.sub) */
-  color?: string
+  /** アイコンの色。`'sub'` (サブカラー) / `'gray'` (#A5A5A5) / `'main'` (メインカラー) / `'text'` (文字色)。省略時は `'sub'` */
+  color?: IconColor
   /** サイズ。`'small'` (24px) / `'large'` (39px)。省略時は `'large'` */
   size?: IconSize
 } & (
@@ -37,25 +37,25 @@ type Props = {
  *
  * 引数:
  * - src: string
- * - color?: string
+ * - color?: 'sub' | 'gray' | 'main' | 'text'
  * - size?: 'small' | 'large'
  * - onClick?: MouseEventHandler<HTMLButtonElement>
  * - aria-label?: string (onClick を指定する場合は必須)
  *
  * @example
- * <IconComponent src={image.アイコン名} color="デフォルト: サブカラー" size="small: 24px / large: 39px (デフォルト: large)" />
+ * <IconComponent src={image.アイコン名} color="sub / gray / main / text (デフォルト: sub)" size="small: 24px / large: 39px (デフォルト: large)" />
  * <IconComponent src={image.アイコン名} onClick={クリックイベント} aria-label="概要" />
  */
 export default function IconComponent({
   src,
-  color = colors.sub,
+  color = 'sub',
   size = 'large',
   onClick,
   'aria-label': ariaLabel,
 }: Props) {
   const style = {
     '--icon-src': `url("${src}")`,
-    '--icon-color': color,
+    '--icon-color': ICON_COLORS[color],
     '--icon-size': `${ICON_SIZES[size]}px`,
   } as CSSProperties
 

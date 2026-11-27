@@ -2,3 +2,13 @@
   font-size: 24px;
   font-weight: bold;
 }
+
+/* 文字色: タイトルカラー */
+.title {
+  color: var(--color-title);
+}
+
+/* 文字色: 白 */
+.white {
+  color: #FFF;
+}

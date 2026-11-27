@@ -1,6 +1,5 @@
 import type { ButtonHTMLAttributes } from 'react'
 import IconComponent, { type IconSize } from './IconComponent'
-import { colors } from '../styles/colors'
 import styles from './RoundButtonComponent.module.css'
 
 type Props = Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'children'> & {
@@ -48,7 +47,7 @@ export default function RoundButtonComponent({
       {...rest}
       className={className ? `${styles.button} ${className}` : styles.button}
     >
-      <IconComponent src={src} color={colors.text} size={iconSize} />
+      <IconComponent src={src} color="text" size={iconSize} />
     </button>
   )
 }
