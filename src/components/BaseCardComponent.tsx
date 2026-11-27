@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react'
-import styles from './BaseListCardComponent.module.css'
+import styles from './BaseCardComponent.module.css'
 
 type Props = {
   /** 背景色。`'sub'` (サブカラー) / `'white'` (#fff・枠線あり)。省略時は `'white'` */
@@ -9,7 +9,7 @@ type Props = {
 }
 
 /**
- * 一覧表示用の土台となるカード (幅 359px / 高さ 84px / 角の半径 10px)。
+ * 土台となるカード (幅 359px / 高さ 84px / 角の半径 10px)。
  *
  * ドロップシャドウを付ける。
  *
@@ -24,8 +24,8 @@ type Props = {
  * - children?: ReactNode
  *
  * @example
- * <BaseListCardComponent color="sub">カードの内容</BaseListCardComponent>
+ * <BaseCardComponent color="sub">カードの内容</BaseCardComponent>
  */
-export default function BaseListCardComponent({ color = 'white', children }: Props) {
+export default function BaseCardComponent({ color = 'white', children }: Props) {
   return <div className={`${styles.card} ${styles[color]}`}>{children}</div>
 }
