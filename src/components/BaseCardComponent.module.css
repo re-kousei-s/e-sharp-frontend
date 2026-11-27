@@ -9,6 +9,8 @@
   flex-direction: column;
   justify-content: center;
   width: 359px;
+  /* 内余白 (box-sizing: border-box なので幅・固定高さに含まれる) */
+  padding: 16px;
   border-radius: 10px;
   box-shadow: var(--card-shadow);
 }
