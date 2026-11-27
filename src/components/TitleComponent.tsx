@@ -23,5 +23,5 @@ type Props = {
  * <TitleComponent title="ホーム" color="white" />
  */
 export default function TitleComponent({ title, color = 'title' }: Props) {
-  return <h1 className={`${styles.heading} ${styles[color]}`}>{title}</h1>
+  return <p className={`${styles.heading} ${styles[color]}`}>{title}</p>
 }
