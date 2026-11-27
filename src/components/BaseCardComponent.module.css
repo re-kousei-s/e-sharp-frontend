@@ -9,9 +9,13 @@
   flex-direction: column;
   justify-content: center;
   width: 359px;
-  height: 84px;
   border-radius: 10px;
   box-shadow: var(--card-shadow);
+}
+
+/* list 指定時: 高さを固定 */
+.list {
+  height: 84px;
 }
 
 /* 背景色: サブカラー */
